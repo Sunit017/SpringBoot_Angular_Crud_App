@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface IEmployeeService {
 
- List<EmployeeResponseDTO> getAll();
+ List<EmployeeResponseDTO> getAll(int pageNumber,int pageSize);
 
  EmployeeRequestDTO createEmployee (EmployeeRequestDTO employeeRequestDTO);
 

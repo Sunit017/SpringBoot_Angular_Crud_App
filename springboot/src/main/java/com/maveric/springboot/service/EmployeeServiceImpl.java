@@ -7,6 +7,9 @@ import com.maveric.springboot.model.Employee;
 import com.maveric.springboot.repository.EmployeeRepo;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,8 +24,12 @@ public class EmployeeServiceImpl implements IEmployeeService{
     private EmployeeRepo employeeRepo;
 
     @Override
-    public List<EmployeeResponseDTO> getAll() {
-        List<Employee> emp=this.employeeRepo.findAll();
+    public List<EmployeeResponseDTO> getAll(int pageNumber,int pageSize) {
+        Pageable p= PageRequest.of (pageNumber,pageSize);
+
+        Page<Employee> pageemp=this.employeeRepo.findAll(p);
+        List<Employee> emp=pageemp.getContent();
+
         return emp.stream().map((emp1) -> this.modelMapper.map(emp1,EmployeeResponseDTO.class))
                 .collect(Collectors.toList());
 

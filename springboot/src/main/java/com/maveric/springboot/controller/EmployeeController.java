@@ -21,9 +21,13 @@ public class EmployeeController {
 
     //Get All Employees
     @GetMapping("/Employees")
-    public ResponseEntity<List<EmployeeResponseDTO>>getAllEmployees() {
+    public ResponseEntity<List<EmployeeResponseDTO>>getAllEmployees(
+            @RequestParam(value = "pageNumber",defaultValue = "0",required = false) int pageNumber,
+            @RequestParam(value = "pageSize",defaultValue = "6",required = false) int pageSize
 
-        List<EmployeeResponseDTO> dto = employeeService.getAll();
+    ) {
+
+        List<EmployeeResponseDTO> dto = employeeService.getAll(pageNumber,pageSize);
         return ResponseEntity.ok(dto);
     }
 
